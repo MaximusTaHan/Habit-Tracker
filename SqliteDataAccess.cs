@@ -5,7 +5,7 @@ namespace Habit_Tracker
     class DataAccesser
     {
         readonly string connestionString = "Data Source=habitTracker.db";
-
+        public SqliteConnection connection;
         public virtual SqliteCommand QueryInput(string CommandString =
             @"CREATE TABLE IF NOT EXISTS breaks_table (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -13,7 +13,7 @@ namespace Habit_Tracker
                 Minutes INTEGER
                 )")
         {
-            var connection = new SqliteConnection(connestionString);
+            connection = new SqliteConnection(connestionString);
             connection.Open();
 
             var command = connection.CreateCommand();
@@ -28,6 +28,7 @@ namespace Habit_Tracker
         public CreateDB()
         {
             base.QueryInput();
+            connection.Close();
         }
     }
     class WriteAccesser : DataAccesser
@@ -45,6 +46,7 @@ namespace Habit_Tracker
             QueryInput(writeString);
             var commandHolder = QueryInput(writeString);
             commandHolder.ExecuteNonQuery();
+            connection.Close();
         }
     }
 
@@ -63,6 +65,7 @@ namespace Habit_Tracker
                     Console.WriteLine($"Entry number: {reader.GetString(0)}, Timestamp: {reader.GetString(1)}, Break time: {reader.GetInt32(2)} minutes");
                 }
             }
+            connection.Close();
         }
     }
 
@@ -81,6 +84,7 @@ namespace Habit_Tracker
 
             var commandHolder = QueryInput(deleteString);
             commandHolder.ExecuteNonQuery();
+            connection.Close();
         }
     }
     class UpdateAccesser : DataAccesser
@@ -104,6 +108,7 @@ namespace Habit_Tracker
             QueryInput(updateString);
             var commandHolder = QueryInput(updateString);
             commandHolder.ExecuteNonQuery();
+            connection.Close();
         }
     }
 }

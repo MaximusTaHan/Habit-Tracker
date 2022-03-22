@@ -12,7 +12,6 @@ UserInput();
 
 void UserInput()
 {
-    Console.Clear();
 
     bool closeApp = false;
     int command;
