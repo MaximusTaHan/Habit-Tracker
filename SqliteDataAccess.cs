@@ -6,7 +6,7 @@ namespace Habit_Tracker
     {
         readonly string connestionString = "Data Source=habitTracker.db";
         public SqliteConnection connection;
-        public virtual SqliteCommand QueryInput(string CommandString =
+        public SqliteCommand QueryInput(string CommandString =
             @"CREATE TABLE IF NOT EXISTS breaks_table (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 Date TIME,
@@ -27,7 +27,7 @@ namespace Habit_Tracker
     {
         public CreateDB()
         {
-            base.QueryInput();
+            QueryInput();
             connection.Close();
         }
     }
